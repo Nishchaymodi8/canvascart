@@ -1,0 +1,112 @@
+{% include "header.html" %}
+<style>
+  .col-md-6:last-child {
+    position: sticky;
+    top: 100px;
+  }
+</style>
+<div class="container py-5">
+  <div class="row">
+    <!-- IMAGE -->
+    <div class="col-md-6">
+      <img
+        src="{{ artwork.image.url }}"
+        style="width: 100%; border-radius: 5px"
+      />
+    </div>
+
+    <!-- DETAILS -->
+    <div class="col-md-6">
+      <p style="color: #c6a75e; letter-spacing: 2px">{{ artwork.category }}</p>
+      <div style="display: flex; align-items: center; gap: 15px">
+        <h2>{{ artwork.title }}</h2>
+
+        <a
+          href="{% url 'toggle_wishlist' artwork.id %}"
+          style="
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 18px;
+            transition: 0.3s;
+          "
+          onmouseover="
+            this.style.background = '#c6a75e';
+            this.style.color = 'white';
+          "
+          onmouseout="
+            this.style.background = 'transparent';
+            this.style.color = 'black';
+          "
+        >
+          ❤️
+        </a>
+      </div>
+
+      <p style="color: gray">by {{ artwork.artist }}</p>
+
+      <h3>₹ {{ artwork.price }}</h3>
+
+      <p style="margin-top: 20px">{{ artwork.description }}</p>
+      <p><strong>Medium:</strong> {{ artwork.category }}</p>
+      <p><strong>Size:</strong> 24 x 36 inches</p>
+      <p><strong>Year:</strong> 2023</p>
+      <p><strong>Style:</strong> Impressionism</p>
+      <p style="line-height: 1.8; color: #555">{{ artwork.description }}</p>
+      <hr style="margin: 20px 0" />
+      <ul style="list-style: none; padding: 0; color: #555">
+        <li>✔ Original Artwork</li>
+        <li>✔ Certificate of Authenticity</li>
+        <li>✔ Free Shipping</li>
+        <li>✔ 7-Day Return</li>
+      </ul>
+      <div style="margin-top: 20px; display: flex; gap: 15px">
+        <!-- ADD TO CART -->
+        <form method="POST" action="/cart/add/{{ artwork.id }}/">
+          {% csrf_token %}
+          <button class="btn btn-dark">ADD TO CART</button>
+        </form>
+
+        <!-- BUY NOW -->
+        <form method="POST" action="/order/buy_now/{{ artwork.id }}/">
+          {% csrf_token %}
+          <button
+            style="
+              background: #c6a75e;
+              color: white;
+              border: none;
+              padding: 10px 20px;
+            "
+          >
+            BUY NOW
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <h3>You May Also Like</h3>
+
+    <div class="row">
+      {% for art in related_artworks %}
+      <div class="col-md-4">
+        <a href="/detail/{{ art.id }}/">
+          <img
+            src="{{ art.image.url }}"
+            style="width: 100%; height: 250px; object-fit: cover"
+          />
+
+          <h5>{{ art.title }}</h5>
+          <p>{{ art.artist }}</p>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% include "footer.html" %}

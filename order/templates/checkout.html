@@ -1,0 +1,46 @@
+{% include "header.html" %}
+
+<div class="container py-5">
+  <h2>Delivery Details</h2>
+
+  <form method="POST" action="/order/place/">
+    {% csrf_token %}
+
+    <input
+      type="text"
+      name="full_name"
+      placeholder="Full Name"
+      class="form-control mb-3"
+      required
+    />
+
+    <input
+      type="text"
+      name="phone"
+      placeholder="Phone Number"
+      class="form-control mb-3"
+      required
+    />
+
+    <textarea
+      name="address"
+      placeholder="Full Address"
+      class="form-control mb-3"
+      required
+    ></textarea>
+
+    <input
+      type="text"
+      name="pincode"
+      placeholder="Pincode"
+      class="form-control mb-3"
+      required
+    />
+
+    <h4>Total: ₹ {{ total_price }}</h4>
+
+    <button class="btn btn-dark mt-3">Proceed to Pay</button>
+  </form>
+</div>
+
+{% include "footer.html" %}

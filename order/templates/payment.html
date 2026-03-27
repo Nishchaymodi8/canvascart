@@ -1,0 +1,33 @@
+{% include "header.html" %}
+
+<div class="container text-center py-5">
+  <h2>Pay ₹ {{ order.total_price }}</h2>
+
+  <button id="pay-btn" class="btn btn-dark">Pay Now</button>
+</div>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script>
+  var options = {
+    key: "{{ razorpay_key }}",
+    amount: "{{ payment.amount }}",
+    currency: "INR",
+    name: "CanvasCart",
+    description: "Order Payment",
+    order_id: "{{ payment.id }}",
+
+    handler: function (response) {
+      window.location.href = "/order/success/";
+    },
+  };
+
+  var rzp = new Razorpay(options);
+
+  document.getElementById("pay-btn").onclick = function (e) {
+    rzp.open();
+    e.preventDefault();
+  };
+</script>
+
+{% include "footer.html" %}

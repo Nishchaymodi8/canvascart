@@ -1,0 +1,227 @@
+<style>
+  /* ================= GALLERY ================= */
+
+  .gallery-hero {
+    background: #f8f5ef;
+  }
+
+  .gallery-title {
+    font-family: "Playfair Display", serif;
+    font-size: 4rem;
+    margin: 20px 0;
+  }
+
+  .gallery-sub {
+    color: #6c757d;
+    max-width: 600px;
+    margin: auto;
+  }
+
+  /* Filters */
+  .filter-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+  }
+
+  .filter-btn {
+    border: 1px solid #ddd;
+    background: transparent;
+    padding: 10px 25px;
+    font-size: 12px;
+    letter-spacing: 2px;
+  }
+
+  .filter-btn.active {
+    background: #c6a75e;
+    color: white;
+    border: none;
+  }
+
+  /* Cards */
+  .gallery-card {
+    background: white;
+    transition: 0.4s;
+  }
+
+  .gallery-card:hover {
+    transform: translateY(-5px);
+  }
+
+  .gallery-card.highlight {
+    border: 1px solid #c6a75e;
+  }
+
+  .gallery-image {
+    height: 350px;
+    position: relative;
+    overflow: hidden;
+  }
+  .gallery-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .medium-label {
+    position: absolute;
+    bottom: 15px;
+    left: 20px;
+    color: white;
+    font-style: italic;
+    z-index: 2;
+  }
+
+  /* Acquire Button */
+  .acquire-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #c6a75e;
+    border: none;
+    padding: 10px 25px;
+    color: white;
+    display: none;
+    z-index: 2;
+  }
+
+  .gallery-image:hover .acquire-btn {
+    display: block;
+  }
+
+  /* Info */
+  .gallery-info {
+    padding: 25px;
+  }
+
+  .category {
+    font-size: 12px;
+    letter-spacing: 3px;
+    color: #c6a75e;
+  }
+
+  .artist {
+    color: #6c757d;
+    margin-bottom: 20px;
+  }
+
+  .price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .original-badge {
+    border: 1px solid #ddd;
+    background: transparent;
+    font-size: 12px;
+    padding: 4px 15px;
+  }
+  .filter-btn {
+    border: 1px solid #ddd;
+    padding: 10px 25px;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-decoration: none;
+    color: black;
+  }
+
+  .filter-btn.active {
+    background: #c6a75e;
+    color: white;
+    border: none;
+  }
+</style>
+{% include "header.html" %}
+<section class="gallery-hero text-center py-5">
+  <div class="container">
+    <p class="section-tag">OUR COLLECTION</p>
+    <h1 class="gallery-title">The Gallery</h1>
+    <p class="gallery-sub">
+      Explore original works spanning mediums, movements, and masters.
+    </p>
+  </div>
+</section>
+<div class="container text-center mb-5">
+  <div class="filter-buttons">
+    <a
+      href="/gallery/"
+      class="filter-btn {% if not selected_category %}active{% endif %}"
+    >
+      ALL WORKS
+    </a>
+
+    <a
+      href="?category=OIL"
+      class="filter-btn {% if selected_category == 'OIL' %}active{% endif %}"
+    >
+      OIL
+    </a>
+
+    <a
+      href="?category=ACRYLIC"
+      class="filter-btn {% if selected_category == 'ACRYLIC' %}active{% endif %}"
+    >
+      ACRYLIC
+    </a>
+
+    <a
+      href="?category=WATERCOLOR"
+      class="filter-btn {% if selected_category == 'WATERCOLOR' %}active{% endif %}"
+    >
+      WATERCOLOR
+    </a>
+
+    <a
+      href="?category=MIXED"
+      class="filter-btn {% if selected_category == 'MIXED' %}active{% endif %}"
+    >
+      MIXED MEDIA
+    </a>
+  </div>
+</div>
+<section class="gallery-grid pb-5">
+  <div class="container">
+    <div class="row g-4">
+      {% for art in artworks %}
+      <div class="col-md-4">
+        <div class="gallery-card">
+          <!-- IMAGE -->
+          <div class="gallery-image">
+            <img
+              src="{{ art.image.url }}"
+              alt="{{ art.title }}"
+              style="width: 100%; height: 350px; object-fit: cover"
+            />
+
+            <a
+              href="/gallery/{{ art.id }}/"
+              style="text-decoration: none; color: inherit"
+            >
+              <button class="acquire-btn">OPEN</button></a
+            >
+            <span class="medium-label">{{ art.category }}</span>
+          </div>
+
+          <!-- INFO -->
+          <div class="gallery-info">
+            <p class="category">{{ art.category }}</p>
+
+            <h4>{{ art.title }}</h4>
+
+            <p class="artist">by {{ art.artist }}</p>
+
+            <div class="price-row">
+              <span>₹ {{ art.price }}</span>
+              <button class="original-badge">ORIGINAL</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% include "footer.html" %}

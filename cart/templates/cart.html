@@ -1,0 +1,83 @@
+{% include "header.html" %}
+
+<div class="container py-5">
+  <h2 class="mb-4">Your Cart</h2>
+
+  {% if cart_items %}
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Artwork</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Total</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for item in cart_items %}
+      <tr>
+        <td>
+          <img src="{{ item.artwork.image.url }}" width="80" />
+          <br />
+          {{ item.artwork.title }}
+        </td>
+
+        <td>₹ {{ item.artwork.price }}</td>
+
+        <td>{{ item.quantity }}</td>
+
+        <td>₹ {{ item.total_price }}</td>
+
+        <td>
+          <div style="display: flex; align-items: center; gap: 10px">
+            <!-- DECREASE -->
+
+            <button onclick="updateCart('/cart/decrease/{{ item.id }}/')">
+              −
+            </button>
+
+            <!-- QUANTITY -->
+            <span>{{ item.quantity }}</span>
+
+            <!-- INCREASE -->
+
+            <button onclick="updateCart('/cart/increase/{{ item.id }}/')">
+              +
+            </button>
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <!-- TOTAL SECTION -->
+  <div class="text-end mt-4">
+    <h5>Total Items: {{ total_items }}</h5>
+    <h4>Total Price: ₹ {{ total_price }}</h4>
+
+    <a href="/order/checkout/" class="btn btn-dark mt-3"> CHECKOUT </a>
+  </div>
+
+  {% else %}
+  <p>Your cart is empty 😢</p>
+  {% endif %}
+</div>
+<script>
+  function updateCart(url) {
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "X-CSRFToken": "{{ csrf_token }}",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        location.reload(); // simple refresh
+      });
+  }
+</script>
+
+{% include "footer.html" %}

@@ -1,0 +1,135 @@
+<!-- SIGNUP MODAL -->
+<style>
+  /* ================= LOGIN MODAL ================= */
+
+  .lux-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
+
+  .lux-modal-content {
+    background: #f8f5ef;
+    width: 500px;
+    padding: 60px 50px;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+  }
+
+  .close-btn {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    background: none;
+    border: none;
+    font-size: 22px;
+    color: #444;
+  }
+
+  .modal-tag {
+    letter-spacing: 3px;
+    font-size: 12px;
+    color: #c6a75e;
+    margin-bottom: 20px;
+  }
+
+  .modal-title {
+    font-family: "Playfair Display", serif;
+    font-size: 36px;
+    margin-bottom: 40px;
+  }
+
+  .lux-modal label {
+    font-size: 12px;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .lux-modal input {
+    width: 100%;
+    padding: 15px;
+    background: #ede9e2;
+    border: 1px solid #ddd;
+    margin-bottom: 30px;
+    font-size: 14px;
+  }
+
+  .lux-modal input:focus {
+    outline: none;
+    border-color: #c6a75e;
+  }
+
+  .sign-btn {
+    width: 100%;
+    padding: 15px;
+    background: black;
+    color: white;
+    border: none;
+    letter-spacing: 3px;
+    margin-bottom: 30px;
+    transition: 0.3s;
+  }
+
+  .sign-btn:hover {
+    background: #c6a75e;
+  }
+
+  .signup-link {
+    text-align: center;
+    font-size: 14px;
+  }
+
+  .signup-link a {
+    color: #c6a75e;
+    text-decoration: none;
+  }
+</style>
+<body>
+  <div id="signupModal" class="lux-modal">
+    <div class="lux-modal-content">
+      <p class="modal-tag">BEGIN YOUR JOURNEY</p>
+      <h2 class="modal-title">Join the<br />Collection</h2>
+
+      <form method="POST">
+        {% csrf_token %}
+        <label>Full Name</label>
+        <input type="text" name="full_name" placeholder="Your name" />
+
+        <label>Email Address</label>
+        <input
+          type="email"
+          name="email"
+          placeholder="your@email.com"
+          required
+        />
+        {% if errors.email %}
+        <p style="color: red; font-size: 12px">{{ errors.email }}</p>
+        {% endif %}
+
+        <label>Password</label>
+        <input
+          type="password"
+          name="password"
+          placeholder="Create a password"
+          required
+        />
+        {% if errors.password %}
+        <p style="color: red; font-size: 12px">{{ errors.password }}</p>
+        {% endif %}
+
+        <button type="submit" class="sign-btn">CREATE ACCOUNT</button>
+      </form>
+
+      <p class="signup-link">
+        Already a member?
+        <a href="/login/" onclick="switchToLogin()">Sign in here</a>
+      </p>
+    </div>
+  </div>
+</body>

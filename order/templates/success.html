@@ -1,0 +1,30 @@
+{% include "header.html" %}
+
+<div class="container text-center py-5">
+  <h2>🎉 Order Placed Successfully!</h2>
+  <p>Your artwork is on the way.</p>
+  <p style="margin-top: 20px; font-size: 18px">
+    Your order has been placed successfully.
+  </p>
+  <p style="margin-top: 10px; color: gray">
+    📦 Delivery details will be shared on your Email and WhatsApp shortly.
+  </p>
+  <div style="margin-top: 40px">
+    <a
+      href="/order/invoice/{{ order.id }}/"
+      target="_blank"
+      style="
+        padding: 12px 30px;
+        background: black;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+      "
+    >
+      Print Invoice
+    </a>
+  </div>
+  <a href="/gallery/" class="btn btn-dark mt-3">Continue Shopping</a>
+</div>
+
+{% include "footer.html" %}
