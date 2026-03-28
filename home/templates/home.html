@@ -233,60 +233,35 @@ Meets <span class="ele"> Elegance</span></p>
 
     <div class="row g-4">
 
-      <!-- Card 1 -->
-      <div class="col-md-4">
-        <div class="art-card">
-          <div class="art-img img1">
-            <span>Oil on Canvas</span>
-          </div>
-          <div class="art-info">
-            <p class="art-category">OIL ON CANVAS</p>
-            <h5>Autumn Reverie</h5>
-            <div class="price-row">
-              <span>$4,800</span>
-              <button class="status-btn">AVAILABLE</button>
-            </div>
-          </div>
-        </div>
+  {% for art in artworks %}
+  <div class="col-md-4">
+    <div class="art-card">
+
+      <div class="art-img" style="
+        background-image: url('{{ art.image }}');
+        background-size: cover;
+        background-position: center;
+      ">
+        <span>{{ art.category.name }}</span>
       </div>
 
-      <!-- Card 2 -->
-      <div class="col-md-4">
-        <div class="art-card">
-          <div class="art-img img2">
-            <span>Acrylic on Linen</span>
-          </div>
-          <div class="art-info">
-            <p class="art-category">ACRYLIC ON LINEN</p>
-            <h5>Desert at Dusk</h5>
-            <div class="price-row">
-              <span>$7,200</span>
-              <button class="status-btn">AVAILABLE</button>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div class="art-info">
+        <p class="art-category">{{ art.category.name|upper }}</p>
+        <h5>{{ art.title }}</h5>
 
-      <!-- Card 3 -->
-      <div class="col-md-4">
-        <div class="art-card">
-          <div class="art-img img3">
-            <span>Watercolor</span>
-          </div>
-          <div class="art-info">
-            <p class="art-category">WATERCOLOR ON PAPER</p>
-            <h5>Arctic Morning</h5>
-            <div class="price-row">
-              <span>$3,400</span>
-              <button class="status-btn">LAST PIECE</button>
-            </div>
-          </div>
+        <div class="price-row">
+          <span>₹{{ art.price }}</span>
+          <button class="status-btn">AVAILABLE</button>
         </div>
       </div>
 
     </div>
+  </div>
+  {% endfor %}
 
-    <button class="view-gallery-btn mt-5">VIEW FULL GALLERY</button>
+</div>
+
+    <a href="gallery"><button class="view-gallery-btn mt-5">VIEW FULL GALLERY</button></a>
 
   </div>
 </section>

@@ -4,6 +4,8 @@ from django.contrib.auth.hashers import check_password
 import re
 from   .models import UserProfile
 from django.contrib.auth.hashers import make_password
+from gallery.models import Artwork
+
 
 # Create your views here.
 def signup(request):
@@ -53,9 +55,11 @@ def signup(request):
 
 def show_home(request):
     user_name = request.session.get('user_name')  # optional
-
+    artworks = Artwork.objects.all()[:3]  # only 3 items
+    
     return render(request, 'home.html', {
-        'user_name': user_name
+        'user_name': user_name,
+        'artworks': artworks
     })
    
 def login(request):
