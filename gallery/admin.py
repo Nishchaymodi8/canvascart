@@ -3,8 +3,9 @@ from django.contrib import admin
 from .models import Artwork
 import cloudinary.uploader
 
+
 class ArtworkForm(forms.ModelForm):
-    image_file = forms.ImageField(required=False)
+    image = forms.ImageField(required=True)  # 🔥 THIS LINE IS KEY
 
     class Meta:
         model = Artwork
@@ -15,9 +16,12 @@ class ArtworkAdmin(admin.ModelAdmin):
     form = ArtworkForm
 
     def save_model(self, request, obj, form, change):
-        if form.cleaned_data.get('image_file'):
-            uploaded = cloudinary.uploader.upload(form.cleaned_data['image_file'])
-            obj.image = uploaded['secure_url']
+        image_file = form.cleaned_data.get('image')
+
+        if image_file:
+            uploaded = cloudinary.uploader.upload(image_file)
+            obj.image = uploaded['secure_url']  # save URL
+
         super().save_model(request, obj, form, change)
 
 
